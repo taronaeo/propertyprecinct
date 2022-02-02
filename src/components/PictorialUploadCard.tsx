@@ -43,7 +43,7 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
           src={preview}
           alt='Image Preview'
           onDoubleClick={() => setPreview(undefined)}
-          className={`aspect-1 object-scale-down rounded-xl border-4 border-dashed ${borderColor} ${className}`}
+          className={`w-full aspect-1 object-scale-down rounded-xl border-4 border-dashed ${borderColor} ${className}`}
         />
       ) : (
         <Fragment>
