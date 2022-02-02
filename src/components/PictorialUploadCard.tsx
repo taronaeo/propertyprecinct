@@ -79,3 +79,4 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
 };
 
 export default PictorialUploadCard;
+export type { PictorialUploadCardProps };
