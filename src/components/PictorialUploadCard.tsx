@@ -46,6 +46,13 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
     importance === 'required' ? 'border-red-300' : 'border-purple-300',
   ].join(' ');
 
+  const inputClassNames = [
+    `w-full resize-none`,
+    `font-medium text-sm`,
+    `rounded-md border-none`,
+    importance === 'required' ? 'focus:ring-red-300' : 'focus:ring-purple-300',
+  ].join(' ');
+
   return (
     <div className='w-full h-full'>
       {!!preview ? (
@@ -73,7 +80,13 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
         </Fragment>
       )}
 
-      <p className='text-sm font-bold'>{label}</p>
+      <textarea
+        id={id}
+        name={id}
+        defaultValue={label}
+        placeholder='Photo Title'
+        className={inputClassNames}
+      />
     </div>
   );
 };
