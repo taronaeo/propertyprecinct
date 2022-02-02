@@ -17,31 +17,11 @@ const App: React.FC = () => {
           label='Overview - Front of Shop (w/o LQ)'
           importance='required'
         />
-        <PictorialUploadCard
-          id='test3'
-          label='Corridor (Left View)'
-          importance='optional'
-        />
-        <PictorialUploadCard
-          id='test4'
-          label='Corridor (Right View)'
-          importance='optional'
-        />
-        <PictorialUploadCard
-          id='test6'
-          label='ODA (Left View)'
-          importance='optional'
-        />
-        <PictorialUploadCard
-          id='test7'
-          label='ODA (Right View)'
-          importance='optional'
-        />
-        <PictorialUploadCard
-          id='test8'
-          label='Trading Area (Photo 1)'
-          importance='optional'
-        />
+        <PictorialUploadCard id='test3' label='Corridor (Left View)' />
+        <PictorialUploadCard id='test4' label='Corridor (Right View)' />
+        <PictorialUploadCard id='test6' label='ODA (Left View)' />
+        <PictorialUploadCard id='test7' label='ODA (Right View)' />
+        <PictorialUploadCard id='test8' label='Trading Area (Photo 1)' />
 
         {/* <div className='bg-yellow-300 rounded-xl xs:h-auto aspect-1'></div>
       <div className='bg-red-300 rounded-xl xs:h-auto aspect-1'></div>

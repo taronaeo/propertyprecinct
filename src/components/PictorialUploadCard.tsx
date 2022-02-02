@@ -11,20 +11,17 @@ interface PictorialUploadCardProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   id: string;
   label: string;
-  importance?: 'required' | 'optional';
+  importance?: 'optional' | 'required';
 }
 
 const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
   id,
   label,
-  importance,
-  className,
+  importance = 'optional',
+  className = '',
 }) => {
   const [image, setImage] = useState<File>();
   const [preview, setPreview] = useState<string>();
-
-  const borderColor =
-    importance === 'required' ? 'border-red-300' : 'border-purple-300';
 
   useEffect(() => {
     if (!image) return () => setPreview(undefined);
@@ -36,6 +33,19 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
     return () => reader.abort();
   }, [image]);
 
+  const previewClassNames = [
+    `w-full aspect-1 object-scale-down`,
+    `rounded-xl border-4 border-dashed`,
+    importance === 'required' ? 'border-red-300' : 'border-purple-300',
+  ].join(' ');
+
+  const cardClassNames = [
+    `w-full aspect-1`,
+    `rounded-xl border-4 border-dashed`,
+    `flex flex-col align-middle items-center justify-center`,
+    importance === 'required' ? 'border-red-300' : 'border-purple-300',
+  ].join(' ');
+
   return (
     <div className='w-full h-full'>
       {!!preview ? (
@@ -43,13 +53,11 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
           src={preview}
           alt='Image Preview'
           onDoubleClick={() => setPreview(undefined)}
-          className={`w-full aspect-1 object-scale-down rounded-xl border-4 border-dashed ${borderColor} ${className}`}
+          className={`${previewClassNames} ${className}`}
         />
       ) : (
         <Fragment>
-          <label
-            htmlFor={id}
-            className={`aspect-1 flex flex-col align-middle items-center justify-center rounded-xl border-4 border-dashed ${borderColor}`}>
+          <label htmlFor={id} className={`${cardClassNames} ${className}`}>
             <PhotographIcon className='w-10 h-10 text-gray-500' />
             <h1 className='font-medium text-xl text-gray-700'>Take Photo</h1>
           </label>
