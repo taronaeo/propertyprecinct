@@ -1,4 +1,3 @@
-import { SaveIcon } from '@heroicons/react/outline';
 import { DetailedHTMLProps, ButtonHTMLAttributes } from 'react';
 
 interface ButtonProps
@@ -30,7 +29,6 @@ const Button: React.FC<ButtonProps> = ({
       {...props}
       disabled={disabled || loading}
       className={`${classNames} ${className}`}>
-      <SaveIcon className='w-10 h-10 text-gray-300' />
       <h1 className='font-medium text-xl text-white'>{children}</h1>
     </button>
   );
