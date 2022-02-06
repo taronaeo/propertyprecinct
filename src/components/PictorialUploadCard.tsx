@@ -1,11 +1,5 @@
 import { PhotographIcon } from '@heroicons/react/outline';
-import {
-  useEffect,
-  useState,
-  Fragment,
-  HTMLAttributes,
-  DetailedHTMLProps,
-} from 'react';
+import { useState, useEffect, HTMLAttributes, DetailedHTMLProps } from 'react';
 
 interface PictorialUploadCardProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -19,6 +13,7 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
   label,
   importance = 'optional',
   className = '',
+  ...props
 }) => {
   const [image, setImage] = useState<File>();
   const [preview, setPreview] = useState<string>();
@@ -53,32 +48,33 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
     importance === 'required' ? 'focus:ring-red-300' : 'focus:ring-purple-300',
   ].join(' ');
 
-  return (
-    <div className='w-full h-full'>
-      {!!preview ? (
+  if (!!preview)
+    return (
+      <div {...props} className='w-full h-full'>
         <img
           src={preview}
           alt='Image Preview'
           onDoubleClick={() => setPreview(undefined)}
           className={`${previewClassNames} ${className}`}
         />
-      ) : (
-        <Fragment>
-          <label htmlFor={id} className={`${cardClassNames} ${className}`}>
-            <PhotographIcon className='w-10 h-10 text-gray-500' />
-            <h1 className='font-medium text-xl text-gray-700'>Take Photo</h1>
-          </label>
+      </div>
+    );
 
-          <input
-            id={id}
-            type='file'
-            capture='environment'
-            accept='.jpg, .jpeg, .png, .heic'
-            className='sr-only'
-            onChange={(evt) => setImage(evt.target.files![0])}
-          />
-        </Fragment>
-      )}
+  return (
+    <div {...props} className='w-full h-full'>
+      <label htmlFor={id} className={`${cardClassNames} ${className}`}>
+        <PhotographIcon className='w-10 h-10 text-gray-500' />
+        <h1 className='font-medium text-xl text-gray-700'>Take Photo</h1>
+      </label>
+
+      <input
+        id={id}
+        type='file'
+        capture='environment'
+        accept='.jpg, .jpeg, .png, .heic'
+        className='sr-only'
+        onChange={(evt) => setImage(evt.target.files![0])}
+      />
 
       <textarea
         id={id}
