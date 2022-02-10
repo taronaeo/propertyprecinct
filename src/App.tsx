@@ -1,10 +1,10 @@
 import { ReactFragment } from 'react';
-import { Categories, CardProps } from './types/Categories';
+import { Categories, LinearCategories } from './types/Categories';
 
 import Button from './components/Button';
 import PictorialUploadCard from './components/PictorialUploadCard';
 
-type Items = [string, CardProps[] | { [subcategory: string]: CardProps[] }];
+type Items = [string, LinearCategories];
 
 const App: React.FC = () => {
   const categories: Categories = {
