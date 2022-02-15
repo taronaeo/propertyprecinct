@@ -5,18 +5,22 @@ const template: Categories = {
     {
       label: 'Overview of Shop Front (w/ LQ)',
       importance: 'required',
+      counted: false,
     },
     {
       label: 'Overview of Shop Front (w/o LQ)',
       importance: 'required',
+      counted: false,
     },
     {
       label: 'Overview of Shop Rear (Left View)',
       importance: 'required',
+      counted: false,
     },
     {
       label: 'Overview of Shop Rear (Right View)',
       importance: 'required',
+      counted: false,
     },
   ],
   signboards: [
@@ -27,15 +31,17 @@ const template: Categories = {
     {
       label: 'Common Corridor (Left View)',
       importance: 'required',
+      counted: false,
     },
     {
       label: 'Common Corridor (Right View)',
       importance: 'required',
+      counted: false,
     },
   ],
   odas: [
-    { label: 'ODA (Left View)', importance: 'required' },
-    { label: 'ODA (Right View)', importance: 'required' },
+    { label: 'ODA (Left View)', importance: 'required', counted: false },
+    { label: 'ODA (Right View)', importance: 'required', counted: false },
   ],
   tradingareas: {
     rooms: [{ label: 'Trading Area Room' }],
