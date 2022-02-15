@@ -1,7 +1,7 @@
 import { Categories } from '../types/Categories';
 
 const template: Categories = {
-  overviews: [
+  overview: [
     {
       label: 'Overview of Shop Front (w/ LQ)',
       importance: 'required',
@@ -23,11 +23,11 @@ const template: Categories = {
       counted: false,
     },
   ],
-  signboards: [
+  signboard: [
     { label: 'Store Signboard', importance: 'required' },
     { label: 'Store Signboard' },
   ],
-  corridors: [
+  corridor: [
     {
       label: 'Common Corridor (Left View)',
       importance: 'required',
@@ -39,20 +39,25 @@ const template: Categories = {
       counted: false,
     },
   ],
-  odas: [
+  oda: [
     { label: 'ODA (Left View)', importance: 'required', counted: false },
     { label: 'ODA (Right View)', importance: 'required', counted: false },
   ],
-  tradingareas: {
+  tradingarea: {
     rooms: [{ label: 'Trading Area Room' }],
     toilets: [{ label: 'Trading Area Toilet' }],
     firedoors: [{ label: 'Trading Area Firedoor' }],
   },
-  staircases: [{ label: 'Staircase' }],
-  lqs: [{ label: 'Living Quarters' }],
-  aircons: [],
-  remarks: [],
-  extras: [],
+  staircase: [{ label: 'Internal Staircase' }],
+  lq: {
+    hall: [{ label: 'Living Quarters Hall' }],
+    kitchen: [{ label: 'Living Quarters Kitchen' }],
+    room: [{ label: 'Living Quarters Room' }],
+    storeroom: [{ label: 'Living Quarters Storeroom' }],
+  },
+  aircon: [{ label: 'Aircon' }],
+  remark: [{ label: 'Remark Photo' }],
+  extra: [{ label: 'Extra Photo' }],
 };
 
 export default template;
