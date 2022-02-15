@@ -1,7 +1,10 @@
 import { PictorialUploadCardProps } from '../components/PictorialUploadCard';
 
-type UploadProps = Pick<PictorialUploadCardProps, 'label' | 'importance'>;
 type LinearCategories = UploadProps[] | Categories;
+interface UploadProps
+  extends Pick<PictorialUploadCardProps, 'label' | 'importance'> {
+  counted?: boolean;
+}
 
 interface Categories {
   [category: string]: UploadProps[] | Categories;
