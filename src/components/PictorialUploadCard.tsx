@@ -1,11 +1,14 @@
 import { PhotographIcon } from '@heroicons/react/outline';
 import { useState, useEffect, HTMLAttributes, DetailedHTMLProps } from 'react';
 
+import { UseFormRegister } from 'react-hook-form';
+
 interface PictorialUploadCardProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   id: string;
   label: string;
   importance?: 'optional' | 'required';
+  register: UseFormRegister<any>;
 }
 
 const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
@@ -13,6 +16,7 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
   label,
   importance = 'optional',
   className = '',
+  register,
   ...props
 }) => {
   const [image, setImage] = useState<File>();
@@ -78,10 +82,9 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
 
       <textarea
         id={id}
-        name={id}
-        defaultValue={label}
-        placeholder='Photo Title'
         className={inputClassNames}
+        placeholder={label}
+        {...register(id, { value: label, required: true })}
       />
     </div>
   );
