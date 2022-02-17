@@ -10,8 +10,8 @@ import PictorialUploadCard from './components/PictorialUploadCard';
 type Iteration = [string, LinearCategories];
 
 const App: React.FC = () => {
-  const { watch, register, handleSubmit } = useForm();
-  const onSubmit = useCallback(console.log, []);
+  const onSubmit = useCallback((data) => console.log(data), []);
+  const { reset, register, handleSubmit } = useForm();
 
   const recurse = useCallback(([category, items]: Iteration): ReactFragment => {
     if (!Array.isArray(items))
@@ -20,7 +20,7 @@ const App: React.FC = () => {
       );
 
     return items.map(({ counted = true, ...props }, count) => {
-      const id = `${category}.${count + 1}`;
+      const id = `${category}.${count}`;
       const counter = counted ? count + 1 : '';
 
       return (
@@ -53,8 +53,13 @@ const App: React.FC = () => {
         <h1 className='mb-4 text-4xl font-bold'>Report Actions</h1>
 
         <div className='mb-2 grid gap-4 grid-cols-2'>
-          <Button color='green'>Save Report</Button>
-          <Button color='red'>Cancel</Button>
+          <Button color='green' type='submit'>
+            Save Report
+          </Button>
+
+          <Button color='red' type='reset' onClick={() => reset()}>
+            Reset Report
+          </Button>
         </div>
       </form>
     </div>
