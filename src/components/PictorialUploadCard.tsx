@@ -18,30 +18,31 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
   className = '',
   ...props
 }) => {
-  const { register, setValue, resetField } = useFormContext();
+  const textboxId = `${id}.label`;
+  const previewId = `${id}.preview`;
+  const previewUrlId = `${id}.previewUrl`;
 
-  const [image, setImage] = useState<File>();
+  const { watch, register, setValue, resetField } = useFormContext();
   const [preview, setPreview] = useState<string>();
+  const image = watch(previewId) as FileList;
 
   useEffect(() => {
-    if (!image) return () => setPreview(undefined);
+    if (!image || image.length <= 0) return;
 
+    const [photo] = image;
     const reader = new FileReader();
+    reader.readAsDataURL(photo);
     reader.onloadend = async () => {
-      const result = reader.result! as string;
+      const result = reader.result as string;
       const { ref } = await storageApi.writePreviewToTemp(result);
       const url = await storageApi.getPreviewUrl(ref);
 
-      setPreview(result);
-      setValue(previewId, url);
+      setPreview(url);
+      setValue(previewUrlId, url);
     };
-    reader.readAsDataURL(image);
 
     return () => reader.abort();
   }, [image]);
-
-  const previewId = `${id}.preview`;
-  const textboxId = `${id}.label`;
 
   const previewClassNames = [
     `w-full aspect-1 object-scale-down`,
@@ -70,7 +71,6 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
           src={preview}
           alt='Image Preview'
           onDoubleClick={() => {
-            setImage(undefined);
             setPreview(undefined);
             resetField(id);
           }}
@@ -91,7 +91,7 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
             capture='environment'
             accept='.jpg, .jpeg, .png, .heic'
             className='sr-only'
-            onChange={(evt) => setImage(evt.target.files![0])}
+            {...register(previewId)}
           />
         </div>
       )}
