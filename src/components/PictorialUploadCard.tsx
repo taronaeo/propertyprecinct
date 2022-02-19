@@ -1,7 +1,8 @@
 import { useFormContext } from 'react-hook-form';
+import { PhotographIcon } from '@heroicons/react/outline';
 import { useState, useEffect, HTMLAttributes, DetailedHTMLProps } from 'react';
 
-import { PhotographIcon } from '@heroicons/react/outline';
+import { storageApi } from '../firebase';
 
 interface PictorialUploadCardProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -26,11 +27,13 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
     if (!image) return () => setPreview(undefined);
 
     const reader = new FileReader();
-    reader.onloadend = () => {
+    reader.onloadend = async () => {
       const result = reader.result! as string;
+      const ref = (await storageApi.writePreviewToTemp(result)).ref;
+      const url = await storageApi.getPreviewUrl(ref);
 
       setPreview(result);
-      setValue(`${id}.preview`, result);
+      setValue(previewId, url);
     };
     reader.readAsDataURL(image);
 
