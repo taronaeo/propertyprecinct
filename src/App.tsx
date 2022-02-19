@@ -1,8 +1,8 @@
-import { useForm } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { useCallback, ReactFragment } from 'react';
 
 import { LinearCategories } from './types/Categories';
-import templateFTT from './templates/ftt';
+import fttTemplate from './templates/ftt';
 
 import Button from './components/Button';
 import PictorialUploadCard from './components/PictorialUploadCard';
@@ -10,8 +10,8 @@ import PictorialUploadCard from './components/PictorialUploadCard';
 type Iteration = [string, LinearCategories];
 
 const App: React.FC = () => {
+  const methods = useForm();
   const onSubmit = useCallback((data) => console.log(data), []);
-  const { reset, register, handleSubmit } = useForm();
 
   const recurse = useCallback(([category, items]: Iteration): ReactFragment => {
     if (!Array.isArray(items))
@@ -29,7 +29,6 @@ const App: React.FC = () => {
           key={id}
           id={id}
           label={`${props.label} ${counter}`.trimEnd()}
-          register={register}
         />
       );
     });
@@ -39,29 +38,31 @@ const App: React.FC = () => {
     <div className='p-4'>
       <h1 className='mb-4 text-4xl font-extrabold'>PropertyPrecinct</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='mb-4 grid gap-4 grid-cols-2'>
-          {Object.entries(templateFTT).map(recurse)}
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <div className='mb-4 grid gap-4 grid-cols-2'>
+            {Object.entries(fttTemplate).map(recurse)}
 
-          {/* <div className='bg-yellow-300 rounded-xl xs:h-auto aspect-1'></div>
+            {/* <div className='bg-yellow-300 rounded-xl xs:h-auto aspect-1'></div>
               <div className='bg-red-300 rounded-xl xs:h-auto aspect-1'></div>
               <div className='bg-green-300 rounded-xl xs:h-auto aspect-1'></div>
               <div className='bg-purple-300 rounded-xl xs:h-auto aspect-1'></div>
               <div className='bg-orange-300 rounded-xl xs:h-auto aspect-1'></div> */}
-        </div>
+          </div>
 
-        <h1 className='mb-4 text-4xl font-bold'>Report Actions</h1>
+          <h1 className='mb-4 text-4xl font-bold'>Report Actions</h1>
 
-        <div className='mb-2 grid gap-4 grid-cols-2'>
-          <Button color='green' type='submit'>
-            Save Report
-          </Button>
+          <div className='mb-2 grid gap-4 grid-cols-2'>
+            <Button color='green' type='submit'>
+              Save Report
+            </Button>
 
-          <Button color='red' type='reset' onClick={() => reset()}>
-            Reset Report
-          </Button>
-        </div>
-      </form>
+            <Button color='red' type='reset'>
+              Reset Report
+            </Button>
+          </div>
+        </form>
+      </FormProvider>
     </div>
   );
 };
