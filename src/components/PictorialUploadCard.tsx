@@ -61,7 +61,6 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
     `w-full resize-none rounded-md`,
     `font-medium text-sm`,
     `border-none focus:ring-0`,
-    importance === 'required' ? 'focus:ring-red-300' : 'focus:ring-purple-300',
   ].join(' ');
 
   return (
@@ -69,7 +68,7 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
       {!!preview ? (
         <img
           src={preview}
-          alt='Image Preview'
+          alt={label}
           onDoubleClick={() => {
             setPreview(undefined);
             resetField(id);
