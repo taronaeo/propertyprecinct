@@ -1,9 +1,10 @@
 import { useForm, FormProvider } from 'react-hook-form';
 
+import templateFTT from './templates/ftt';
 import UploadReportForm from './forms/UploadReport';
 
 const App: React.FC = () => {
-  const methods = useForm();
+  const methods = useForm({ defaultValues: templateFTT });
 
   return (
     <div className='p-4'>
