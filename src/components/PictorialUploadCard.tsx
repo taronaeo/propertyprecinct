@@ -1,14 +1,13 @@
-import { PhotographIcon } from '@heroicons/react/outline';
+import { useFormContext } from 'react-hook-form';
 import { useState, useEffect, HTMLAttributes, DetailedHTMLProps } from 'react';
 
-import { UseFormRegister } from 'react-hook-form';
+import { PhotographIcon } from '@heroicons/react/outline';
 
 interface PictorialUploadCardProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   id: string;
   label: string;
   importance?: 'optional' | 'required';
-  register: UseFormRegister<any>;
 }
 
 const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
@@ -16,9 +15,10 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
   label,
   importance = 'optional',
   className = '',
-  register,
   ...props
 }) => {
+  const { register, setValue } = useFormContext();
+
   const [image, setImage] = useState<File>();
   const [preview, setPreview] = useState<string>();
 
@@ -26,7 +26,12 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
     if (!image) return () => setPreview(undefined);
 
     const reader = new FileReader();
-    reader.onloadend = () => setPreview(reader.result! as string);
+    reader.onloadend = () => {
+      const result = reader.result! as string;
+
+      setPreview(result);
+      setValue(`${id}.preview`, result);
+    };
     reader.readAsDataURL(image);
 
     return () => reader.abort();
@@ -66,13 +71,15 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
 
   return (
     <div {...props} className='w-full h-full'>
-      <label htmlFor={id} className={`${cardClassNames} ${className}`}>
+      <label
+        htmlFor={`${id}.preview`}
+        className={`${cardClassNames} ${className}`}>
         <PhotographIcon className='w-10 h-10 text-gray-500' />
         <h1 className='font-medium text-xl text-gray-700'>Take Photo</h1>
       </label>
 
       <input
-        id={id}
+        id={`${id}.preview`}
         type='file'
         capture='environment'
         accept='.jpg, .jpeg, .png, .heic'
@@ -81,10 +88,10 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
       />
 
       <textarea
-        id={id}
+        id={`${id}.label`}
         className={inputClassNames}
         placeholder={label}
-        {...register(id, { value: label, required: true })}
+        {...register(`${id}.label`, { value: label, required: true })}
       />
     </div>
   );
