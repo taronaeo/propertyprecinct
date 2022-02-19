@@ -37,6 +37,9 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
     return () => reader.abort();
   }, [image]);
 
+  const previewId = `${id}.preview`;
+  const textboxId = `${id}.label`;
+
   const previewClassNames = [
     `w-full aspect-1 object-scale-down`,
     `rounded-xl border-4 border-dashed`,
@@ -57,41 +60,40 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
     importance === 'required' ? 'focus:ring-red-300' : 'focus:ring-purple-300',
   ].join(' ');
 
-  if (!!preview)
-    return (
-      <div {...props} className='w-full h-full'>
+  return (
+    <div {...props} className='w-full h-full'>
+      {!!preview ? (
         <img
           src={preview}
           alt='Image Preview'
           onDoubleClick={() => setPreview(undefined)}
           className={`${previewClassNames} ${className}`}
         />
-      </div>
-    );
+      ) : (
+        <div>
+          <label
+            htmlFor={previewId}
+            className={`${cardClassNames} ${className}`}>
+            <PhotographIcon className='w-10 h-10 text-gray-500' />
+            <h1 className='font-medium text-xl text-gray-700'>Take Photo</h1>
+          </label>
 
-  return (
-    <div {...props} className='w-full h-full'>
-      <label
-        htmlFor={`${id}.preview`}
-        className={`${cardClassNames} ${className}`}>
-        <PhotographIcon className='w-10 h-10 text-gray-500' />
-        <h1 className='font-medium text-xl text-gray-700'>Take Photo</h1>
-      </label>
-
-      <input
-        id={`${id}.preview`}
-        type='file'
-        capture='environment'
-        accept='.jpg, .jpeg, .png, .heic'
-        className='sr-only'
-        onChange={(evt) => setImage(evt.target.files![0])}
-      />
+          <input
+            id={previewId}
+            type='file'
+            capture='environment'
+            accept='.jpg, .jpeg, .png, .heic'
+            className='sr-only'
+            onChange={(evt) => setImage(evt.target.files![0])}
+          />
+        </div>
+      )}
 
       <textarea
-        id={`${id}.label`}
+        id={textboxId}
         className={inputClassNames}
         placeholder={label}
-        {...register(`${id}.label`, { value: label, required: true })}
+        {...register(textboxId, { value: label, required: true })}
       />
     </div>
   );
