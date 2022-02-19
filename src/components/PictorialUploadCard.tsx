@@ -20,25 +20,23 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
 }) => {
   const textboxId = `${id}.label`;
   const previewId = `${id}.preview`;
-  const previewUrlId = `${id}.previewUrl`;
 
-  const { watch, register, setValue, resetField } = useFormContext();
+  const [image, setImage] = useState<File>();
   const [preview, setPreview] = useState<string>();
-  const image = watch(previewId) as FileList;
+  const { register, setValue, resetField } = useFormContext();
 
   useEffect(() => {
-    if (!image || image.length <= 0) return;
+    if (!image || !image.name) return;
 
-    const [photo] = image;
     const reader = new FileReader();
-    reader.readAsDataURL(photo);
+    reader.readAsDataURL(image);
     reader.onloadend = async () => {
       const result = reader.result as string;
       const { ref } = await storageApi.writePreviewToTemp(result);
       const url = await storageApi.getPreviewUrl(ref);
 
       setPreview(url);
-      setValue(previewUrlId, url);
+      setValue(previewId, url);
     };
 
     return () => reader.abort();
@@ -70,8 +68,8 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
           src={preview}
           alt={label}
           onDoubleClick={() => {
-            setPreview(undefined);
             resetField(id);
+            setPreview(undefined);
           }}
           className={`${previewClassNames} ${className}`}
         />
@@ -87,10 +85,10 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
           <input
             id={previewId}
             type='file'
+            className='sr-only'
             capture='environment'
             accept='.jpg, .jpeg, .png, .heic'
-            className='sr-only'
-            {...register(previewId)}
+            onChange={(e) => setImage(e.target.files![0])}
           />
         </div>
       )}
