@@ -54,9 +54,9 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
   ].join(' ');
 
   const inputClassNames = [
-    `w-full resize-none`,
+    `w-full resize-none rounded-md`,
     `font-medium text-sm`,
-    `rounded-md border-none`,
+    `border-none focus:ring-0`,
     importance === 'required' ? 'focus:ring-red-300' : 'focus:ring-purple-300',
   ].join(' ');
 
