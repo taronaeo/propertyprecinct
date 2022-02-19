@@ -21,19 +21,14 @@ const UploadReport: React.FC = () => {
         recurse([`${category}.${subcategory}`, iterable])
       );
 
-    return items.map(({ counted = true, ...props }, count) => {
-      const id = `${category}.${count}`;
-      const counter = counted ? count + 1 : '';
-
-      return (
-        <PictorialUploadCard
-          {...props}
-          key={id}
-          id={id}
-          label={`${props.label} ${counter}`.trimEnd()}
-        />
-      );
-    });
+    return items.map(({ ...props }, count) => (
+      <PictorialUploadCard
+        {...props}
+        key={`${category}.${count}`}
+        id={`${category}.${count}`}
+        label={props.label}
+      />
+    ));
   }, []);
 
   renderCount++;

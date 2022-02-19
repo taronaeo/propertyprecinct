@@ -4,45 +4,27 @@ const template: Categories = {
   overview: [
     {
       label: 'Overview of Shop Front (w/ LQ)',
-      importance: 'required',
-      counted: false,
     },
     {
       label: 'Overview of Shop Front (w/o LQ)',
-      importance: 'required',
-      counted: false,
     },
     {
       label: 'Overview of Shop Rear (Left View)',
-      importance: 'required',
-      counted: false,
     },
     {
       label: 'Overview of Shop Rear (Right View)',
-      importance: 'required',
-      counted: false,
     },
   ],
-  signboard: [
-    { label: 'Store Signboard', importance: 'required' },
-    { label: 'Store Signboard' },
-  ],
+  signboard: [{ label: 'Store Signboard' }, { label: 'Store Signboard' }],
   corridor: [
     {
       label: 'Common Corridor (Left View)',
-      importance: 'required',
-      counted: false,
     },
     {
       label: 'Common Corridor (Right View)',
-      importance: 'required',
-      counted: false,
     },
   ],
-  oda: [
-    { label: 'ODA (Left View)', importance: 'required', counted: false },
-    { label: 'ODA (Right View)', importance: 'required', counted: false },
-  ],
+  oda: [{ label: 'ODA (Left View)' }, { label: 'ODA (Right View)' }],
   tradingarea: {
     rooms: [{ label: 'Trading Area Room' }],
     toilets: [{ label: 'Trading Area Toilet' }],
@@ -56,8 +38,8 @@ const template: Categories = {
     storeroom: [{ label: 'Living Quarters Storeroom' }],
   },
   aircon: [{ label: 'Aircon' }],
-  remark: [{ label: 'Remark Photo' }],
-  extra: [{ label: 'Extra Photo' }],
+  remark: [{ label: 'Remarks' }],
+  extra: [{ label: 'Extras' }],
 };
 
 export default template;
