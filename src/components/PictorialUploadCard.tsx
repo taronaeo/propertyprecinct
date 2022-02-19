@@ -29,7 +29,7 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
     const reader = new FileReader();
     reader.onloadend = async () => {
       const result = reader.result! as string;
-      const ref = (await storageApi.writePreviewToTemp(result)).ref;
+      const { ref } = await storageApi.writePreviewToTemp(result);
       const url = await storageApi.getPreviewUrl(ref);
 
       setPreview(result);
