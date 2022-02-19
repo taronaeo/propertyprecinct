@@ -56,9 +56,10 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
   ].join(' ');
 
   const inputClassNames = [
-    `w-full resize-none rounded-md`,
+    `w-full resize-none`,
     `font-medium text-sm`,
-    `border-none focus:ring-0`,
+    `border-none rounded-md`,
+    `focus:ring-0`,
   ].join(' ');
 
   return (
