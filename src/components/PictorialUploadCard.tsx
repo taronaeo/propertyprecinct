@@ -18,7 +18,7 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
   className = '',
   ...props
 }) => {
-  const { register, setValue } = useFormContext();
+  const { register, setValue, resetField } = useFormContext();
 
   const [image, setImage] = useState<File>();
   const [preview, setPreview] = useState<string>();
@@ -69,7 +69,11 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
         <img
           src={preview}
           alt='Image Preview'
-          onDoubleClick={() => setPreview(undefined)}
+          onDoubleClick={() => {
+            setImage(undefined);
+            setPreview(undefined);
+            resetField(id);
+          }}
           className={`${previewClassNames} ${className}`}
         />
       ) : (
