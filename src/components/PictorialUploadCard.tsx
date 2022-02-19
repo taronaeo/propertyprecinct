@@ -1,6 +1,12 @@
 import { useFormContext } from 'react-hook-form';
 import { PhotographIcon } from '@heroicons/react/outline';
-import { useState, useEffect, HTMLAttributes, DetailedHTMLProps } from 'react';
+import {
+  useState,
+  useEffect,
+  useCallback,
+  HTMLAttributes,
+  DetailedHTMLProps,
+} from 'react';
 
 import { storageApi } from '../firebase';
 
@@ -8,13 +14,11 @@ interface PictorialUploadCardProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   id: string;
   label: string;
-  importance?: 'optional' | 'required';
 }
 
 const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
   id,
   label,
-  importance = 'optional',
   className = '',
   ...props
 }) => {
@@ -24,6 +28,11 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
   const [image, setImage] = useState<File>();
   const [preview, setPreview] = useState<string>();
   const { register, setValue, resetField } = useFormContext();
+
+  const resetCard = useCallback(() => {
+    resetField(id);
+    setPreview(undefined);
+  }, []);
 
   useEffect(() => {
     if (!image || !image.name) return;
@@ -42,20 +51,13 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
     return () => reader.abort();
   }, [image]);
 
-  const previewClassNames = [
+  const imageClassName = [
     `w-full aspect-1 object-scale-down`,
-    `rounded-xl border-4 border-dashed`,
-    importance === 'required' ? 'border-red-300' : 'border-purple-300',
-  ].join(' ');
-
-  const cardClassNames = [
-    `w-full aspect-1`,
-    `rounded-xl border-4 border-dashed`,
+    `rounded-xl border-4 border-dashed border-red-300`,
     `flex flex-col align-middle items-center justify-center`,
-    importance === 'required' ? 'border-red-300' : 'border-purple-300',
   ].join(' ');
 
-  const inputClassNames = [
+  const inputClassName = [
     `w-full resize-none`,
     `font-medium text-sm`,
     `border-none rounded-md`,
@@ -68,17 +70,14 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
         <img
           src={preview}
           alt={label}
-          onDoubleClick={() => {
-            resetField(id);
-            setPreview(undefined);
-          }}
-          className={`${previewClassNames} ${className}`}
+          onDoubleClick={resetCard}
+          className={`border-green-300 ${imageClassName} ${className}`}
         />
       ) : (
         <div>
           <label
             htmlFor={previewId}
-            className={`${cardClassNames} ${className}`}>
+            className={`border-red-300 ${imageClassName} ${className}`}>
             <PhotographIcon className='w-10 h-10 text-gray-500' />
             <h1 className='font-medium text-xl text-gray-700'>Take Photo</h1>
           </label>
@@ -96,7 +95,7 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
 
       <textarea
         id={textboxId}
-        className={inputClassNames}
+        className={inputClassName}
         placeholder={label}
         {...register(textboxId, { value: label, required: true })}
       />
