@@ -97,6 +97,7 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
         id={textboxId}
         className={inputClassName}
         placeholder={label}
+        defaultValue={label}
         {...register(textboxId, { value: label, required: true })}
       />
     </div>
