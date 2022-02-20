@@ -12,7 +12,9 @@ type Iteration = [string, LinearCategories];
 let renderCount = 0;
 
 const UploadReport: React.FC = () => {
-  const { handleSubmit } = useFormContext();
+  const { reset, handleSubmit } = useFormContext();
+
+  const onReset = useCallback(() => reset(fttTemplate), []);
   const onSubmit = useCallback((data) => console.log(data), []);
 
   const recurse = useCallback(([category, items]: Iteration): ReactFragment => {
@@ -54,7 +56,7 @@ const UploadReport: React.FC = () => {
           Save Report
         </Button>
 
-        <Button color='red' type='reset'>
+        <Button color='red' type='reset' onClick={onReset}>
           Reset Report
         </Button>
       </div>
