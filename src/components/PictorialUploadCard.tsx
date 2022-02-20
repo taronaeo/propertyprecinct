@@ -24,15 +24,22 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
 }) => {
   const textboxId = `${id}.label`;
   const previewId = `${id}.preview`;
+  const previewRefId = `${id}.previewRef`;
 
   const [image, setImage] = useState<File>();
   const [preview, setPreview] = useState<string>();
-  const { register, setValue, resetField } = useFormContext();
+  const { watch, register, setValue, resetField } = useFormContext();
+
+  const watchPreview = watch(previewId);
 
   const resetCard = useCallback(() => {
     resetField(id);
     setPreview(undefined);
   }, []);
+
+  useEffect(() => {
+    if (!watchPreview) resetCard();
+  }, [watchPreview]);
 
   useEffect(() => {
     if (!image || !image.name) return;
@@ -46,6 +53,7 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
 
       setPreview(url);
       setValue(previewId, url);
+      setValue(previewRefId, `gs://${ref.bucket}/${ref.fullPath}`);
     };
 
     return () => reader.abort();
