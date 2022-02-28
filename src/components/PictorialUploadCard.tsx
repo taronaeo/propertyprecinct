@@ -8,7 +8,7 @@ import {
   DetailedHTMLProps,
 } from 'react';
 
-import { storageApi } from '../firebase';
+import { storageApi } from '@/firebase';
 
 interface PictorialUploadCardProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
