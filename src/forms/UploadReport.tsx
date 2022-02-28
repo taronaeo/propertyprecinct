@@ -9,8 +9,6 @@ import PictorialUploadCard from '../components/PictorialUploadCard';
 
 type Iteration = [string, LinearCategories];
 
-let renderCount = 0;
-
 const UploadReport: React.FC = () => {
   const { reset, handleSubmit } = useFormContext();
 
@@ -33,12 +31,8 @@ const UploadReport: React.FC = () => {
     ));
   }, []);
 
-  renderCount++;
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {renderCount}
-
       <div className='mb-4 grid gap-4 grid-cols-2'>
         {Object.entries(fttTemplate).map(recurse)}
 
