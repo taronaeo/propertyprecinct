@@ -1,7 +1,7 @@
-import { PictorialUploadCardProps } from '../components/PictorialUploadCard';
+import { UploadBoxProps } from '../components/UploadBox';
 
 type LinearCategories = UploadProps[] | Categories;
-type UploadProps = Pick<PictorialUploadCardProps, 'label'>;
+type UploadProps = Pick<UploadBoxProps, 'label'>;
 
 interface Categories {
   [category: string]: UploadProps[] | Categories;

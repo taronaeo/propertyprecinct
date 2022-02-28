@@ -5,7 +5,7 @@ import fttTemplate from '../templates/ftt';
 import { LinearCategories } from '../types/Categories';
 
 import Button from '../components/Button';
-import PictorialUploadCard from '../components/PictorialUploadCard';
+import UploadBox from '../components/UploadBox';
 
 type Iteration = [string, LinearCategories];
 
@@ -22,7 +22,7 @@ const UploadReport: React.FC = () => {
       );
 
     return items.map(({ ...props }, count) => (
-      <PictorialUploadCard
+      <UploadBox
         {...props}
         key={`${category}.${count}`}
         id={`${category}.${count}`}

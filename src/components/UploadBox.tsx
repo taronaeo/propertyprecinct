@@ -10,13 +10,13 @@ import {
 
 import { storageApi } from '@/firebase';
 
-interface PictorialUploadCardProps
+interface UploadBoxProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   id: string;
   label: string;
 }
 
-const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
+const UploadBox: React.FC<UploadBoxProps> = ({
   id,
   label,
   className = '',
@@ -112,5 +112,5 @@ const PictorialUploadCard: React.FC<PictorialUploadCardProps> = ({
   );
 };
 
-export default PictorialUploadCard;
-export type { PictorialUploadCardProps };
+export default UploadBox;
+export type { UploadBoxProps };
